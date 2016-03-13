@@ -72,8 +72,8 @@ extension Vapor.Request {
 
 // MARK: Response Bridge
 
-extension Vapor.Response.ContentType {
-    var statusLine: String {
+extension Vapor.Response.ContentType: CustomStringConvertible {
+    public var description: String {
         switch self {
         case .Json:
             return "application/json"
@@ -91,7 +91,7 @@ extension Vapor.Response.ContentType {
 
 extension Vapor.Response: Nest.ResponseType {
     public var statusLine: String {
-        return contentType.statusLine
+        return "\(self.status.code) \(self.status.reasonPhrase)"
     }
     
     public var headers: [Nest.Header] {
